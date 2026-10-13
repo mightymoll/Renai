@@ -35,10 +35,6 @@
   p { margin: 0; font-weight: 500;}
   a { color: inherit; }
   .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
-  .label {
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px;
-    letter-spacing: .14em; text-transform: uppercase; color: var(--ardoise);
-  }
   .lead { font-size: 19px; color: var(--encre); max-width: 34em; }
   /* Chapô sous un h2 : 50 % de la largeur du contenu */
   h2 + .lead { max-width: calc((min(100vw, var(--wrap)) - 48px) * .5); }
@@ -78,33 +74,18 @@
   /* Hero */
   .hero { padding: 72px 0 88px; }
   .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
-  .hero h1 { color: var(--cobalt); margin: 18px 0 24px; }
+  .hero h1 { color: var(--encre); margin: 18px 0 24px; }
   .hero h2 { margin-bottom: 40px; color: var(--cobalt); }
   .hero .value { margin-top: 18px; font-weight: 400; font-size: 12px; line-height: 1.3; max-width: 34em; color: var(--ardoise)}
   .hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-  /* Maquette iPhone : cadre encre, écran lait */
-  .stage { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-  .phone {
-    width: 100%; max-width: 360px; background: var(--encre); border-radius: 56px; padding: 14px; zoom: .75;
-  }
-  .screen {
-    background: var(--lait); border-radius: 44px; padding: 14px 20px 28px; min-height: 620px;
-    display: flex; flex-direction: column; gap: 12px;
-  }
-  .screen-cta { margin-top: auto; background: var(--encre); color: var(--lait); border-radius: var(--radius-pill); text-align: center; font-weight: 600; padding: 16px; }
-  .statusbar { text-align: center; font-weight: 600; font-size: 15px; padding: 4px 0 10px; }
-  .screen-title { font-family: var(--font-display); font-weight: 800; font-size: 30px; letter-spacing: -0.035em; line-height: 1.05; margin-bottom: 6px; }
-  .notif {
-    position: relative; background: var(--lait); border: var(--border-strong); border-radius: var(--radius-l); padding: 12px 14px;
-    display: flex; gap: 12px; align-items: flex-start;
-  }
-  .notif.ok { background: var(--beurre); border-color: var(--beurre); }
-  .notif .ic { width: 38px; height: 38px; border-radius: 10px; background: var(--bonbon); display: grid; place-items: center; flex: none; }
-  .notif .ic.ok { background: var(--lait); }
-  .notif small { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ardoise); font-weight: 600; margin-bottom: 2px; }
-  .notif p { font-size: 15px; line-height: 1.4; }
-  .bubble { align-self: flex-start; background: var(--bonbon); border-radius: var(--radius-l) var(--radius-l) var(--radius-l) 4px; padding: 10px 16px; font-size: 15px; font-weight: 500; position: relative; max-width: 260px; }
-  .stage-note {font-weight: 400; font-size: 12px; line-height: 1.3; max-width: 34em; color: var(--ardoise); text-align: center; }
+  /* Photos : deux cadres ronds */
+  .portraits { position: relative; width: 100%; max-width: 520px; aspect-ratio: 826 / 848; margin-left: auto; }
+  .portraits .frame { position: absolute; border-radius: 50%; aspect-ratio: 1; overflow: hidden; }
+  .portraits img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .portraits .big { left: 0; bottom: 0; width: 80%; }
+  .portraits .big img { object-position: 28% 40%; }
+  .portraits .small { right: 0; top: 0; width: 34%; }
+  .portraits .small img { object-position: 62% 50%; transform: scale(1.2); transform-origin: 60% 0; }
 
   /* Sections */
   section { padding: 96px 0; }
@@ -124,11 +105,18 @@
   .takeaway { width: 80%; margin: 0 auto; display: flex; gap: 14px; align-items: center; background: var(--beurre); border-radius: var(--radius-l); padding: 20px 24px; font-weight: 600; font-size: 20px; line-height: 1.35; }
 
   /* Fonctionnement */
-  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .step { border: var(--border-strong); border-radius: var(--radius-l); padding: 24px; display: flex; flex-direction: column; gap: 14px; background: var(--lait); }
-  .step .num { width: 40px; height: 40px; border-radius: 50%; background: var(--cobalt); color: var(--lait); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 18px; }
+  .how { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; align-items: center; }
+  .how-content { display: grid; gap: 40px; }
+  .how-content .section-head { margin-bottom: 0; }
+  .how-content .section-head h2 { margin-top: 40px; }
+  .how-visual img { display: block; width: 100%; max-width: 342px; height: auto; margin: 0 auto; }
+  .steps { display: flex; flex-direction: column; gap: 32px; margin: 0; padding: 0; list-style: none; }
+  .step { display: grid; grid-template-columns: 40px 1fr; column-gap: 20px; row-gap: 8px; }
+  .step > * { grid-column: 2; }
+  .step .num { grid-column: 1; grid-row: 1 / span 3; width: 40px; height: 40px; border-radius: 50%; background: var(--cobalt); color: var(--lait); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 18px; }
+  .step h3 { align-self: center; min-height: 40px; display: flex; align-items: center; }
   .step p { color: var(--encre); font-size: 16px; }
-  .step .limit { margin-top: auto; padding-top: 14px; border-top: var(--border-soft); font-size: 14px; color: var(--encre); }
+  .step .limit { font-size: 14px; color: var(--encre); opacity: .8; }
   .next { margin-top: 56px; background: var(--sable); border-radius: var(--radius-l); padding: 32px; display: grid; gap: 24px; }
   .next-head { max-width: 720px; display: grid; gap: 10px; }
   .next-head p { color: var(--encre); }
@@ -140,7 +128,6 @@
   /* Point de vérité */
   .truth { background: var(--cobalt); color: var(--lait); }
   .truth .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-  .truth .label { color: var(--lait); opacity: .75; }
   .truth h2 { margin: 14px 0 32px; }
   .truth p.lead { color: var(--lait); opacity: .9; }
   .truth ul { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px; }
@@ -193,9 +180,10 @@
 
   @media (max-width: 960px) {
     .hero .wrap, .truth .wrap, .demo .wrap { grid-template-columns: 1fr; }
-    .steps { grid-template-columns: 1fr 1fr; }
+    .how { grid-template-columns: 1fr; gap: 40px; }
+    .how-visual img { max-width: 270px; }
     .quotes, .next-list { grid-template-columns: 1fr; }
-    .screen { min-height: 0; }
+    .portraits { margin: 0 auto; max-width: 420px; }
     h2 + .lead { max-width: 34em; }
   }
   @media (max-width: 640px) {
@@ -207,7 +195,7 @@
     section.sable { padding: 48px 0; }
     section.after-bridge { padding-top: 32px; }
     .takeaway { width: 100%; }
-    .steps, .two { grid-template-columns: 1fr; }
+    .two { grid-template-columns: 1fr; }
     form, .next { padding: 24px; }
   }
 </style>
@@ -243,8 +231,8 @@
       <span>renai</span>
     </a>
     <nav>
-      <a class="link" href="#fonctionnement">Fonctionnement</a>
-      <a class="link" href="#questions">Questions</a>
+      <a class="link" href="#fonctionnement">Produit</a>
+      <a class="link" href="#questions">FAQ</a>
       <a class="btn btn-primary" href="#demo">Demander une démo</a>
     </nav>
   </div>
@@ -265,28 +253,9 @@
         <p class="value">Nous cherchons des organismes prêts à tester Renai avec leurs adhérents.</p>
       </div>
 
-      <div class="stage">
-        <div class="phone" aria-label="Exemple de notifications Renai">
-          <div class="screen">
-            <div class="statusbar">9:41</div>
-            <p class="screen-title">Aujourd'hui</p>
-            <div class="bubble">Voici l'ordonnance de papa.</div>
-            <div class="notif">
-              <div class="ic"><svg width="28" height="28" style="--body:#2F4BD9"><use href="#renai-complice"/></svg></div>
-              <div><small>maintenant</small><p>Je l'ai envoyée à la pharmacie de votre père. Je préviens Claire et Paul.</p></div>
-            </div>
-            <div class="notif">
-              <div class="ic"><svg width="28" height="28" style="--body:#2F4BD9"><use href="#renai-complice"/></svg></div>
-              <div><small>dans 5 semaines</small><p>L'ordonnance expire le 28 novembre. J'écris au Dr Martin pour demander un rendez-vous avant le 14.</p></div>
-            </div>
-            <div class="notif ok">
-              <div class="ic ok"><svg width="28" height="28" style="--body:#2F4BD9"><use href="#renai-complice"/></svg></div>
-              <div><small>8 h 00</small><p>Rappel envoyé à votre père : comprimé du matin.</p></div>
-            </div>
-            <div class="screen-cta" aria-hidden="true">Parler à Renai</div>
-          </div>
-        </div>
-        <p class="stage-note">exemple illustratif</p>
+      <div class="portraits">
+        <div class="frame small"><img src="assets/daughter-with-mother.jpg" alt="Une fille enlace sa mère âgée, assise dans un fauteuil" width="612" height="408"></div>
+        <div class="frame big"><img src="assets/sons-with-Father.jpg" alt="Deux fils rient avec leur père âgé dans un jardin" width="1000" height="667"></div>
       </div>
     </div>
   </section>
@@ -318,7 +287,7 @@
   <div class="bridge">
     <div class="wrap">
       <div class="takeaway">
-        <svg width="36" height="36" style="--body:#2F4BD9;flex:none"><use href="#renai-regle"/></svg>
+        <svg width="52" height="52" style="--body:#2F4BD9;flex:none"><use href="#renai-regle"/></svg>
         <span>Renai ne remplace pas le groupe familial. Il prend en charge des tâches précises, pour que l'aidant en ait moins à porter.</span>
       </div>
     </div>
@@ -327,41 +296,48 @@
   <!-- Fonctionnement -->
   <section id="fonctionnement" class="after-bridge">
     <div class="wrap">
-      <div class="section-head">
-        <h2>On commence par les traitements : de l'ordonnance à la prise.</h2>
-        <p class="lead">C'est le premier module de Renai.<br>Quatre tâches précises, choisies parce qu'elles reviennent sans cesse dans le quotidien des aidants.</p>
-      </div>
-      <div class="steps">
-        <article class="step">
-          <div class="num">1</div>
-          <h3>Photo de l'ordonnance</h3>
-          <p>L'aidant prend l'ordonnance en photo dans l'appli. Elle est enregistrée dans le suivi partagé.</p>
-          <p class="limit">Fin des papiers perdus entre deux visites.</p>
-        </article>
-        <article class="step">
-          <div class="num">2</div>
-          <h3>Envoi à la pharmacie</h3>
-          <p>L'ordonnance part automatiquement à la pharmacie choisie par la famille.</p>
-          <p class="limit">Un déplacement en moins pour l'aidant.</p>
-        </article>
-        <article class="step">
-          <div class="num">3</div>
-          <h3>Demande de rendez-vous</h3>
-          <p>Un agent IA écrit au médecin prescripteur pour demander un rendez-vous, une à deux semaines avant l'expiration de l'ordonnance.</p>
-          <p class="limit">Renai demande. Le médecin décide. Aucun rendez-vous n'est garanti.</p>
-        </article>
-        <article class="step">
-          <div class="num">4</div>
-          <h3>Rappels de prise</h3>
-          <p>Une série de notifications rappelle au parent de prendre ses médicaments aux bonnes heures.</p>
-          <p class="limit">Moins de prises oubliées, sans appel quotidien de l'aidant.</p>
-        </article>
+      <div class="how">
+        <div class="how-visual">
+          <img src="assets/renai-phone-mockup.png" alt="L'application Renai sur un téléphone" width="1080" height="1944" loading="lazy">
+        </div>
+        <div class="how-content">
+          <div class="section-head">
+            <h2>On commence par les traitements :<br>de l'ordonnance à la prise.</h2>
+            <p class="lead">C'est le premier module de Renai.<br>Quatre tâches précises, choisies parce qu'elles reviennent sans cesse dans le quotidien des aidants.</p>
+          </div>
+          <ol class="steps">
+            <li class="step">
+              <div class="num">1</div>
+              <h3>Photo de l'ordonnance</h3>
+              <p>L'aidant prend l'ordonnance en photo dans l'appli. Elle est enregistrée dans le suivi partagé.</p>
+              <p class="limit">Fin des papiers perdus entre deux visites.</p>
+            </li>
+            <li class="step">
+              <div class="num">2</div>
+              <h3>Envoi à la pharmacie</h3>
+              <p>L'ordonnance part automatiquement à la pharmacie choisie par la famille.</p>
+              <p class="limit">Un déplacement en moins pour l'aidant.</p>
+            </li>
+            <li class="step">
+              <div class="num">3</div>
+              <h3>Demande de rendez-vous</h3>
+              <p>Un agent IA écrit au médecin prescripteur pour demander un rendez-vous, une à deux semaines avant l'expiration de l'ordonnance.</p>
+              <p class="limit">Renai demande. Le médecin décide. Aucun rendez-vous n'est garanti.</p>
+            </li>
+            <li class="step">
+              <div class="num">4</div>
+              <h3>Rappels de prise</h3>
+              <p>Une série de notifications rappelle au parent de prendre ses médicaments aux bonnes heures.</p>
+              <p class="limit">Moins de prises oubliées, sans appel quotidien de l'aidant.</p>
+            </li>
+          </ol>
+        </div>
       </div>
 
       <div class="next">
         <div class="next-head">
-          <h3>Ensuite, d'autres charges à alléger.</h3>
-          <p>Le même principe, une tâche précise prise en charge et visible par tout l'entourage, s'appliquera à d'autres pans du quotidien. Ces modules ne sont pas encore construits.</p>
+          <h3>Ensuite, d'autres charges à alléger !</h3>
+          <p>Le même principe, une tâche précise prise en charge et visible par tout l'entourage, s'appliquera à d'autres pans du quotidien.</p>
         </div>
         <div class="next-list">
           <article class="next-item">
@@ -384,30 +360,26 @@
     </div>
   </section>
 
-  <!-- Point de vérité -->
+  <!-- Valeur pour l'organisme -->
   <section class="truth">
     <div class="wrap">
       <div>
-        <span class="label">Ce qui nous distingue</span>
-        <h2>Un seul point de vérité pour toute la famille.</h2>
-        <p class="lead">La plupart des outils sont pensés pour un aidant seul. Renai est conçu pour plusieurs : frères et sœurs, proches, intervenants à domicile.</p>
+        <h2>Un service aidants dont vous pouvez montrer l'utilité.</h2>
+        <p class="lead">Proposer un service aux aidants ne suffit pas. Il faut savoir s'il est utilisé, et à quoi il sert. Le pilote Renai est conçu pour répondre à ces deux questions.</p>
         <ul>
-          <li>Chacun voit où en est l'ordonnance, le rendez-vous, le traitement.</li>
-          <li>L'aidant référent n'a plus à tout réexpliquer à chacun.</li>
-          <li>Pour votre organisme, un service concret à proposer, et des résultats de pilote à mesurer avec nous.</li>
+          <li>Vous proposez Renai à un groupe d'adhérents aidants, par vos propres canaux.</li>
+          <li>Nous suivons avec vous l'adoption, l'usage réel et la charge que les aidants disent avoir évitée.</li>
+          <li>Le pilote montre aussi ce que Renai apporte en plus de vos partenaires actuels, et le temps qu'il demande à vos équipes.</li>
+          <li><strong>À la fin, vous décidez avec des résultats en main.</strong></li>
         </ul>
       </div>
-      <div class="family" aria-label="Exemple de suivi partagé">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-          <h3 style="font-size:20px">Suivi de Jean, 88 ans</h3>
-          <div class="people" aria-label="3 proches">
-            <i style="background:var(--cobalt)"></i><i style="background:var(--bonbon)"></i><i style="background:var(--beurre)"></i>
-          </div>
-        </div>
-        <div class="row"><span><b>Ordonnance cardiologie</b><br>Envoyée à la pharmacie</span><span class="st st-ok">C'est réglé</span></div>
-        <div class="row"><span><b>Renouvellement Dr Martin</b><br>Demande envoyée, réponse attendue</span><span class="st st-wait">En attente</span></div>
-        <div class="row"><span><b>Prise du soir</b><br>Rappel à 19 h 00</span><span class="st st-todo">Aujourd'hui</span></div>
-        <p style="font-size:13px;color:var(--encre)">Exemple illustratif.</p>
+      <div class="family" aria-label="Exemple d'indicateurs de pilote">
+        <h3 style="font-size:20px">Pilote, groupe d'adhérents aidants</h3>
+        <div class="row"><span><b>Adoption</b><br>Aidants invités qui utilisent Renai</span><span class="st st-ok">Suivi</span></div>
+        <div class="row"><span><b>Usage</b><br>Ordonnances, demandes de rendez-vous, rappels</span><span class="st st-ok">Suivi</span></div>
+        <div class="row"><span><b>Utilité</b><br>Charge évitée, selon les aidants</span><span class="st st-wait">Déclaratif</span></div>
+        <div class="row"><span><b>Moyens</b><br>Temps demandé à vos équipes</span><span class="st st-todo">À définir ensemble</span></div>
+        <p style="font-size:13px;color:var(--encre)">Exemple illustratif. Les indicateurs sont fixés avec vous avant le pilote.</p>
       </div>
     </div>
   </section>
@@ -416,7 +388,6 @@
   <section id="questions" class="sable">
     <div class="wrap">
       <div class="section-head">
-        <span class="label">Questions franches</span>
         <h2>Ce que vous allez nous demander.</h2>
       </div>
       <div class="faq">
@@ -468,7 +439,6 @@
   <section id="demo" class="demo">
     <div class="wrap">
       <div>
-        <span class="label">Demander une démo</span>
         <h2>Voyons si Renai a sa place chez vous.</h2>
         <p class="lead">Laissez-nous vos coordonnées. Nous revenons vers vous pour fixer un échange.</p>
         <ol>
