@@ -19,7 +19,7 @@
     --border-strong: 1.5px solid var(--encre);
     --border-soft: 1px solid var(--ligne);
     --focus-ring: 0 0 0 3px var(--bonbon);
-    --wrap: 1120px;
+    --wrap: 1440px;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -79,7 +79,7 @@
   .hero .value { margin-top: 18px; font-weight: 400; font-size: 12px; line-height: 1.3; max-width: 34em; color: var(--ardoise)}
   .hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
   /* Photos : deux cadres ronds */
-  .portraits { position: relative; width: 100%; max-width: 520px; aspect-ratio: 826 / 848; margin-left: auto; }
+  .portraits { position: relative; width: 100%; max-width: 600px; aspect-ratio: 826 / 848; margin-left: auto; }
   .portraits .frame { position: absolute; border-radius: 50%; aspect-ratio: 1; overflow: hidden; }
   .portraits img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .portraits .big { left: 0; bottom: 0; width: 80%; }
@@ -135,7 +135,7 @@
   .truth p.lead { color: var(--lait); opacity: .9; }
   .truth ul { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px; }
   .truth li { display: flex; gap: 12px; align-items: flex-start; }
-  .truth-closer { grid-column: 1 / -1; margin: 8px 0 0; text-align: center; font-family: var(--font-display); font-weight: 800; font-size: clamp(24px, 3vw, 32px); letter-spacing: -0.03em; line-height: 1.1; color: var(--beurre); }
+  .truth-closer { grid-column: 1 / -1; margin: 32px 0 0; text-align: center; font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 3.8vw, 40px); letter-spacing: -0.03em; line-height: 1.1; color: var(--beurre); }
   .truth li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--beurre); margin-top: 9px; flex: none; }
   .family { background: var(--lait); color: var(--encre); border-radius: var(--radius-l); padding: 24px; display: grid; gap: 12px; transform: scale(0.8); }
   .family .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--radius-m); border: var(--border-soft); font-size: 15px; }
