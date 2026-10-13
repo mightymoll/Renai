@@ -102,6 +102,7 @@
   .bridge { background: linear-gradient(var(--sable) 50%, transparent 50%); }
   section.sable { padding: 72px 0; }
   section.after-bridge { padding-top: 48px; }
+  section.truth.after-bridge { padding-top: 72px; }
   .takeaway { width: 80%; margin: 0 auto; display: flex; gap: 14px; align-items: center; background: var(--beurre); border-radius: var(--radius-l); padding: 20px 24px; font-weight: 600; font-size: 20px; line-height: 1.35; }
 
   /* Fonctionnement */
@@ -117,7 +118,9 @@
   .step h3 { align-self: center; min-height: 40px; display: flex; align-items: center; }
   .step p { color: var(--encre); font-size: 16px; }
   .step .limit { font-size: 14px; color: var(--encre); opacity: .8; }
-  .next { margin-top: 56px; background: var(--sable); border-radius: var(--radius-l); padding: 32px; display: grid; gap: 24px; }
+  .bridge-truth { background: linear-gradient(transparent 50%, var(--cobalt) 50%); }
+  section.before-truth-bridge { padding-bottom: 80px; }
+  .next { background: var(--sable); border-radius: var(--radius-l); padding: 32px; display: grid; gap: 24px; }
   .next-head { max-width: 720px; display: grid; gap: 10px; }
   .next-head p { color: var(--encre); }
   .next-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -132,8 +135,9 @@
   .truth p.lead { color: var(--lait); opacity: .9; }
   .truth ul { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px; }
   .truth li { display: flex; gap: 12px; align-items: flex-start; }
+  .truth-closer { grid-column: 1 / -1; margin: 8px 0 0; text-align: center; font-family: var(--font-display); font-weight: 800; font-size: clamp(24px, 3vw, 32px); letter-spacing: -0.03em; line-height: 1.1; color: var(--beurre); }
   .truth li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--beurre); margin-top: 9px; flex: none; }
-  .family { background: var(--lait); color: var(--encre); border-radius: var(--radius-l); padding: 24px; display: grid; gap: 12px; }
+  .family { background: var(--lait); color: var(--encre); border-radius: var(--radius-l); padding: 24px; display: grid; gap: 12px; transform: scale(0.8); }
   .family .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--radius-m); border: var(--border-soft); font-size: 15px; }
   .family .row b { font-weight: 600; }
   .family .row .st { font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: var(--radius-pill); white-space: nowrap; }
@@ -147,36 +151,49 @@
   /* Payeurs */
 
   /* Objections */
-  .faq { display: grid; gap: 12px; max-width: 860px; }
+  #questions.sable { padding: 56px 0; }
+  #questions .section-head { margin-bottom: 24px; }
+  #questions .section-head h2 { margin: 0; font-size: clamp(26px, 3.2vw, 36px); }
+  .faq { display: grid; gap: 8px; max-width: 860px; margin: 0 auto; }
   details { border: var(--border-strong); border-radius: var(--radius-l); background: var(--lait); }
-  summary { cursor: pointer; list-style: none; padding: 20px 24px; font-family: var(--font-display); font-weight: 800; font-size: 21px; letter-spacing: -0.02em; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+  summary { cursor: pointer; list-style: none; padding: 14px 20px; font-family: var(--font-display); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; font-family: var(--font-text); font-weight: 500; font-size: 26px; line-height: 1; flex: none; }
+  summary::after { content: "+"; font-family: var(--font-text); font-weight: 500; font-size: 22px; line-height: 1; flex: none; }
   details[open] summary::after { content: "−"; }
-  details .answer { padding: 0 24px 22px; color: var(--encre); display: grid; gap: 10px; }
+  details .answer { padding: 0 20px 16px; font-size: 15px; color: var(--encre); display: grid; gap: 10px; }
 
   /* Démo */
   .demo .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: start; }
   .demo h2 { color: var(--cobalt); margin: 14px 0 32px; }
+  .demo-mascot { display: block; margin: 16px 24px 0 auto; transform: rotate(-12deg); animation: mascot-bounce 3.2s ease-in-out infinite; }
+  @keyframes mascot-bounce {
+    0%, 100% { transform: translateY(0) rotate(-12deg); }
+    50% { transform: translateY(-8px) rotate(-10deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .demo-mascot { animation: none; } }
   .demo ol { padding-left: 20px; margin: 24px 0 0; display: grid; gap: 8px; color: var(--encre); }
-  form { border: var(--border-strong); border-radius: var(--radius-l); padding: 32px; background: var(--lait); display: grid; gap: 18px; }
-  .field { display: grid; gap: 6px; }
+  form { border: var(--border-strong); border-radius: var(--radius-l); padding: 28px 32px; background: var(--sable); display: grid; gap: 12px; }
+  .field { display: grid; gap: 4px; }
   .field label { font-weight: 600; font-size: 14px; }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   input, select, textarea {
     width: 100%; font: 400 16px var(--font-text); color: var(--encre);
-    background: var(--lait); border: var(--border-strong); border-radius: var(--radius-m);
-    padding: 0 14px; height: 48px;
+    background: var(--lait); border: 1px solid var(--encre); border-radius: var(--radius-m);
+    padding: 0 14px; height: 44px;
   }
-  textarea { height: 110px; padding: 12px 14px; resize: vertical; }
+  select {
+    appearance: none; -webkit-appearance: none; padding-right: 44px; cursor: pointer;
+    background: var(--lait) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%2315152A' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 18px center;
+  }
+  textarea { height: 90px; padding: 12px 14px; resize: vertical; }
   form .btn { width: 100%; }
-  form .fine { font-size: 13px; color: var(--encre); }
+  form .fine { font-size: 13px; color: var(--ardoise); text-align: center; }
   .sent { display: none; text-align: center; gap: 16px; justify-items: center; padding: 24px 0; }
   form.done > :not(.sent) { display: none; }
   form.done .sent { display: grid; }
 
-  footer { border-top: var(--border-soft); padding: 32px 0 48px; color: var(--encre); font-size: 14px; }
-  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  footer { border-top: var(--border-soft); padding: 32px 0 48px; color: var(--ardoise); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: center; text-align: center; }
 
   @media (max-width: 960px) {
     .hero .wrap, .truth .wrap, .demo .wrap { grid-template-columns: 1fr; }
@@ -185,6 +202,12 @@
     .quotes, .next-list { grid-template-columns: 1fr; }
     .portraits { margin: 0 auto; max-width: 420px; }
     h2 + .lead { max-width: 34em; }
+    /* Mascotte à droite du titre, jamais plus haute que lui */
+    .demo-intro { display: grid; grid-template-columns: minmax(0, max-content) clamp(72px, 22vw, 120px); justify-content: start; column-gap: 16px; padding-top: 14px; }
+    .demo-intro > * { grid-column: 1 / -1; }
+    .demo-intro h2 { grid-column: 1; grid-row: 1; margin: 0; }
+    .demo-intro .lead { margin-top: 32px; }
+    .demo-mascot { grid-column: 2; grid-row: 1; width: 100%; height: 0; min-height: 100%; margin: 0; align-self: center; }
   }
   @media (max-width: 640px) {
     .wrap { padding: 0 16px; }
@@ -193,7 +216,10 @@
     .hero { padding: 40px 0 56px; }
     section { padding: 64px 0; }
     section.sable { padding: 48px 0; }
+    #questions.sable { padding: 40px 0; }
     section.after-bridge { padding-top: 32px; }
+    section.truth.after-bridge { padding-top: 48px; }
+    section.before-truth-bridge { padding-bottom: 56px; }
     .takeaway { width: 100%; }
     .two { grid-template-columns: 1fr; }
     form, .next { padding: 24px; }
@@ -231,8 +257,7 @@
       <span>renai</span>
     </a>
     <nav>
-      <a class="link" href="#fonctionnement">Produit</a>
-      <a class="link" href="#questions">FAQ</a>
+      <a class="link" href="#questions" hidden>FAQ</a>
       <a class="btn btn-primary" href="#demo">Demander une démo</a>
     </nav>
   </div>
@@ -294,7 +319,7 @@
   </div>
 
   <!-- Fonctionnement -->
-  <section id="fonctionnement" class="after-bridge">
+  <section id="fonctionnement" class="after-bridge before-truth-bridge">
     <div class="wrap">
       <div class="how">
         <div class="how-visual">
@@ -321,7 +346,7 @@
             <li class="step">
               <div class="num">3</div>
               <h3>Demande de rendez-vous</h3>
-              <p>Un agent IA écrit au médecin prescripteur pour demander un rendez-vous, une à deux semaines avant l'expiration de l'ordonnance.</p>
+              <p>Renée, l'assistante IA de Renai, écrit au médecin prescripteur pour demander un rendez-vous, une à deux semaines avant l'expiration de l'ordonnance.</p>
               <p class="limit">Renai demande. Le médecin décide. Aucun rendez-vous n'est garanti.</p>
             </li>
             <li class="step">
@@ -333,7 +358,11 @@
           </ol>
         </div>
       </div>
+    </div>
+  </section>
 
+  <div class="bridge bridge-truth">
+    <div class="wrap">
       <div class="next">
         <div class="next-head">
           <h3>Ensuite, d'autres charges à alléger !</h3>
@@ -358,19 +387,18 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- Valeur pour l'organisme -->
-  <section class="truth">
+  <section class="truth after-bridge">
     <div class="wrap">
       <div>
         <h2>Un service aidants dont vous pouvez montrer l'utilité.</h2>
-        <p class="lead">Proposer un service aux aidants ne suffit pas. Il faut savoir s'il est utilisé, et à quoi il sert. Le pilote Renai est conçu pour répondre à ces deux questions.</p>
+        <p class="lead">Proposer un service aux aidants ne suffit pas. Il faut savoir s'il est utilisé, et à quoi il sert.</p>
         <ul>
           <li>Vous proposez Renai à un groupe d'adhérents aidants, par vos propres canaux.</li>
           <li>Nous suivons avec vous l'adoption, l'usage réel et la charge que les aidants disent avoir évitée.</li>
           <li>Le pilote montre aussi ce que Renai apporte en plus de vos partenaires actuels, et le temps qu'il demande à vos équipes.</li>
-          <li><strong>À la fin, vous décidez avec des résultats en main.</strong></li>
         </ul>
       </div>
       <div class="family" aria-label="Exemple d'indicateurs de pilote">
@@ -381,11 +409,13 @@
         <div class="row"><span><b>Moyens</b><br>Temps demandé à vos équipes</span><span class="st st-todo">À définir ensemble</span></div>
         <p style="font-size:13px;color:var(--encre)">Exemple illustratif. Les indicateurs sont fixés avec vous avant le pilote.</p>
       </div>
+      <p class="truth-closer">À la fin, vous décidez avec des résultats en main.</p>
     </div>
   </section>
 
   <!-- Objections -->
-  <section id="questions" class="sable">
+  <!-- FAQ hidden: remove "hidden" here and on the FAQ nav link to restore -->
+  <section id="questions" class="sable" hidden>
     <div class="wrap">
       <div class="section-head">
         <h2>Ce que vous allez nous demander.</h2>
@@ -401,7 +431,7 @@
         <details>
           <summary>Une IA qui écrit au médecin, est-ce bien raisonnable ?</summary>
           <div class="answer">
-            <p>L'agent demande un rendez-vous au médecin qui a fait l'ordonnance. C'est tout. Il ne donne aucun avis médical et ne touche à aucun traitement.</p>
+            <p>Renée demande un rendez-vous au médecin qui a fait l'ordonnance. C'est tout. Elle ne donne aucun avis médical et ne touche à aucun traitement.</p>
             <p>Les règles d'envoi, comme la validation par la famille avant chaque message, sont à définir ensemble pendant le pilote.</p>
           </div>
         </details>
@@ -409,7 +439,7 @@
           <summary>Renai obtient-il des rendez-vous plus vite ?</summary>
           <div class="answer">
             <p>Non, et nous ne le promettons pas. Sur le terrain, on nous a parlé de 7 à 8 mois d'attente en gériatrie dans certains territoires.</p>
-            <p>Viser une à deux semaines avant l'expiration n'est pas réaliste partout. Mesurer ce que l'agent change, ou ne change pas, est un objectif du pilote.</p>
+            <p>Viser une à deux semaines avant l'expiration n'est pas réaliste partout. Mesurer ce que Renée change, ou ne change pas, est un objectif du pilote.</p>
           </div>
         </details>
         <details>
@@ -438,20 +468,16 @@
   <!-- Démo -->
   <section id="demo" class="demo">
     <div class="wrap">
-      <div>
+      <div class="demo-intro">
         <h2>Voyons si Renai a sa place chez vous.</h2>
         <p class="lead">Laissez-nous vos coordonnées. Nous revenons vers vous pour fixer un échange.</p>
-        <ol>
-          <li>Nous vous montrons le prototype.</li>
-          <li>Vous nous dites ce qui manque, ou ce qui bloque.</li>
-          <li>Si l'intérêt est là, nous définissons un pilote ensemble.</li>
-        </ol>
+        <svg class="demo-mascot" width="200" height="200" viewBox="0 0 100 100" preserveAspectRatio="xMinYMid meet" style="--body:#2F4BD9" aria-hidden="true"><use href="#renai-regle"/></svg>
       </div>
 
       <form id="demo-form" novalidate>
         <div class="two">
-          <div class="field"><label for="name">Nom et prénom</label><input id="name" name="name" autocomplete="name" required></div>
-          <div class="field"><label for="role">Fonction</label><input id="role" name="role" autocomplete="organization-title"></div>
+          <div class="field"><label for="firstname">Prénom</label><input id="firstname" name="firstname" autocomplete="given-name" required></div>
+          <div class="field"><label for="lastname">Nom</label><input id="lastname" name="lastname" autocomplete="family-name" required></div>
         </div>
         <div class="two">
           <div class="field"><label for="org">Organisme</label><input id="org" name="org" autocomplete="organization" required></div>
@@ -482,8 +508,7 @@
 
 <footer>
   <div class="wrap">
-    <a class="logo" href="#top"><svg class="mark" width="28" height="28"><use href="#renai-silhouette"/></svg><span style="font-size:22px">renai</span></a>
-    <p>Projet en phase de test, Rocket School, 2026. Renai ne fournit aucun avis médical.</p>
+    <p>Renai © 2026. Renai ne fournit aucun avis médical.</p>
   </div>
 </footer>
 
