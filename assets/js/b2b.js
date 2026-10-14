@@ -218,7 +218,13 @@
     const fields = hubspotFields
       .map(({ key, objectTypeId, name }) => ({ objectTypeId, name, value: String(data[key] || '').trim() }))
       .filter(field => field.value);
-    return { fields, context: { ...(hutk && { hutk }), pageUri: location.href, pageName: document.title } };
+    const payload = { fields, context: { ...(hutk && { hutk }), pageUri: location.href, pageName: document.title } };
+    // Base légale RGPD : intérêt légitime pour répondre à la demande (email de confirmation, recontact).
+    const legalText = document.getElementById('form-legal')?.textContent.trim();
+    if (hubspot.SUBSCRIPTION_TYPE_ID && legalText) {
+      payload.legalConsentOptions = { legitimateInterest: { value: true, subscriptionTypeId: Number(hubspot.SUBSCRIPTION_TYPE_ID), legalBasis: 'LEAD', text: legalText } };
+    }
+    return payload;
   }
   const form = document.getElementById('pilot-form');
   const submit = form.querySelector('[type=submit]');
