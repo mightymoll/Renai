@@ -20,3 +20,17 @@
 /* Cercle décalé coloré derrière chaque photo */
 .portraits .big{box-shadow:-16px 14px 0 var(--renee-cobalt)}.portraits .small{box-shadow:10px 10px 0 var(--renee-beurre)}.portraits .tiny{box-shadow:8px -8px 0 var(--renee-bonbon)}
 @media(max-width:680px){.portraits .big{box-shadow:-10px 9px 0 var(--renee-cobalt)}.portraits .small{box-shadow:6px 6px 0 var(--renee-beurre)}.portraits .tiny{box-shadow:5px -5px 0 var(--renee-bonbon)}}
+
+/* Alignement typographique sur la page particuliers : corps 17px / 1.55, titres -0.03em, surtitres 13px encre */
+body{font-size:17px;line-height:1.55}p{font-weight:500}
+h1,h2,h3{letter-spacing:-.03em}h3{letter-spacing:-.02em;line-height:1.2}
+h2,.problem-title h2,.solution-intro h2,.human-copy h2,.pilot-heading h2,.roadmap-section h2,.faq-intro h2{font-size:clamp(36px,4.4vw,56px);line-height:1.08}
+.hero h1,.contact-copy h2{letter-spacing:-.05em}
+.pain-row h3,.pilot-process h3,.modal-demo h3{font-size:24px}
+.eyebrow,.hero-copy .eyebrow,.section-top .eyebrow,.contact-copy .eyebrow{font-size:13px;letter-spacing:.16em}.hero-copy .eyebrow{color:var(--renee-encre)}
+.hero-description{line-height:1.55}
+.problem-title p,.human-copy>p,.pilot-heading>p,.roadmap-section>p,.solution-intro>p,.contact-copy>p,.faq-intro p{font-size:17px}
+.pain-row p,.pilot-process p,.faq-answer,.module-step small,.human-principles span,.measurement-grid p{font-size:16px;line-height:1.55}
+.faq-list summary{font-size:17px}
+.hero-note,.contact-note,.section-side-note,.audience-inner>span{font-size:14px}
+.text-link{color:var(--renee-cobalt)}
