@@ -21,18 +21,6 @@
   reducedMotion.addEventListener('change', event => {
     if (event.matches) root.classList.remove('motion-ready');
   });
-  // Visitors can also pause decorative motion without changing system settings.
-  const motionButton = document.createElement('button');
-  motionButton.className = 'text-link';
-  motionButton.style.fontSize = '10px';
-  motionButton.textContent = 'Réduire les animations';
-  motionButton.setAttribute('aria-pressed', 'false');
-  motionButton.addEventListener('click', () => {
-    const off = root.classList.toggle('motion-off');
-    motionButton.setAttribute('aria-pressed', String(off));
-    motionButton.textContent = off ? 'Activer les animations' : 'Réduire les animations';
-  });
-  document.querySelector('.site-footer').append(motionButton);
 
   const menuButton = document.querySelector('.menu-toggle');
   const mobileNav = document.querySelector('.mobile-nav');
