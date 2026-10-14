@@ -67,8 +67,10 @@
   ];
   const heroTabs = [...document.querySelectorAll('[data-hero-step]')];
   const heroPanel = document.getElementById('hero-conversation');
-  heroPanel.setAttribute('role', 'tabpanel');
-  heroPanel.setAttribute('aria-labelledby', 'hero-tab-0');
+  if (heroPanel) {
+    heroPanel.setAttribute('role', 'tabpanel');
+    heroPanel.setAttribute('aria-labelledby', 'hero-tab-0');
+  }
   function animateSwap(target) {
     target.classList.remove('content-switch');
     void target.offsetWidth;
