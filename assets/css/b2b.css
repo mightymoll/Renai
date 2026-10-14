@@ -21,23 +21,21 @@
 .portraits .big{box-shadow:-16px 14px 0 var(--renee-cobalt)}.portraits .small{box-shadow:10px 10px 0 var(--renee-beurre)}.portraits .tiny{box-shadow:8px -8px 0 var(--renee-bonbon)}
 @media(max-width:680px){.portraits .big{box-shadow:-10px 9px 0 var(--renee-cobalt)}.portraits .small{box-shadow:6px 6px 0 var(--renee-beurre)}.portraits .tiny{box-shadow:5px -5px 0 var(--renee-bonbon)}}
 
-/* Alignement typographique sur la page particuliers : corps 17px / 1.55, titres -0.03em, surtitres 13px encre */
-body{font-size:17px;line-height:1.55}p{font-weight:500}
+/* Alignement typographique sur la page particuliers : corps 17px / 1.4, titres -0.03em, surtitres 13px encre */
+body{font-size:17px;line-height:1.4}p{font-weight:500}
 h1,h2,h3{letter-spacing:-.03em}h3{letter-spacing:-.02em;line-height:1.2}
 h2,.problem-title h2,.solution-intro h2,.human-copy h2,.pilot-heading h2,.roadmap-section h2,.faq-intro h2{font-size:clamp(36px,4.4vw,56px);line-height:1.08}
 .hero h1,.contact-copy h2{letter-spacing:-.05em}
 .pain-row h3,.pilot-process h3,.modal-demo h3{font-size:24px}
 .eyebrow,.hero-copy .eyebrow,.section-top .eyebrow,.contact-copy .eyebrow{font-size:13px;letter-spacing:.16em}.hero-copy .eyebrow{color:var(--renee-encre)}
-.hero-description{line-height:1.55}
-.problem-title p,.human-copy>p,.pilot-heading>p,.roadmap-section>p,.solution-intro>p,.contact-copy>p,.faq-intro p{font-size:17px}
-.pain-row p,.pilot-process p,.faq-answer,.module-step small,.human-principles span,.measurement-grid p{font-size:16px;line-height:1.55}
+.problem-title p,.human-copy>p,.pilot-heading>p,.roadmap-section>p,.solution-intro>p,.contact-copy>p,.faq-intro p{font-size:19px}
+.pain-row p,.pilot-process p,.faq-answer,.module-step small,.human-principles span,.measurement-grid p,.solution-footer p{font-size:17px;line-height:1.4}
 .faq-list summary{font-size:17px}
 .hero-note,.contact-note,.section-side-note,.audience-inner>span{font-size:14px}
 .text-link{color:var(--renee-cobalt)}
 
-/* Paragraphes en encre et interligne 1.55, comme sur la page particuliers */
-.hero-description,.problem-title p,.pain-row p,.human-copy>p,.human-principles span,.pilot-heading>p,.pilot-process p,.measurement-grid p,.roadmap-section>p,.faq-intro p,.faq-answer,.modal-body>p{color:var(--renee-encre);line-height:1.55}
-.hero-description{line-height:1.4}
+/* Paragraphes en encre et interligne 1.4, comme sur la page particuliers */
+.hero-description,.problem-title p,.pain-row p,.human-copy>p,.human-principles span,.pilot-heading>p,.pilot-process p,.measurement-grid p,.roadmap-section>p,.faq-intro p,.faq-answer,.modal-body>p{color:var(--renee-encre);line-height:1.4}
 
 /* Bandeau partenaires : fond cobalt, texte lait */
 .audience-strip{background:var(--renee-cobalt);color:var(--renee-lait);border:0}
@@ -61,3 +59,7 @@ h2,.problem-title h2,.solution-intro h2,.human-copy h2,.pilot-heading h2,.roadma
 @media(max-width:680px){.roadmap-tags{display:grid;grid-template-columns:1fr}.roadmap-tags span{font-size:16px}}
 .roadmap-tags span{display:flex;align-items:center;justify-content:center;gap:10px}
 .roadmap-tags .icon{width:20px;height:20px;margin:0;color:var(--renee-encre);transform:none}
+@media(max-width:680px){.problem-title p,.human-copy>p,.pilot-heading>p,.roadmap-section>p,.solution-intro>p,.contact-copy>p,.faq-intro p{font-size:18px}.pain-row p,.pilot-process p,.faq-answer,.module-step small,.human-principles span,.measurement-grid p{font-size:16px}}
+
+/* Rotation automatique des cartes du module */
+.module-preview>*{transition:opacity .6s ease-in-out}.module-preview.fading>*{opacity:0}

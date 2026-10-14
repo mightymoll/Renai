@@ -100,18 +100,68 @@
     { title: 'Un planning clair.<br>Des rappels utiles.', shortTitle: 'Accompagner les prises', demo: reminderDemo, ai: 'Les rappels sont à programmer selon le planning prescrit, après vérification.', explanation: 'Programmer les rappels de prise. Une notification ne confirme pas la prise effective du médicament.' }
   ];
   const moduleTabs = [...document.querySelectorAll('[data-module-step]')];
-  function selectModule(index) {
+  const modulePanel = document.getElementById('module-preview');
+  let moduleIndex = 0;
+  function selectModule(index, animate = true) {
+    moduleIndex = index;
     moduleTabs.forEach((tab, i) => { tab.classList.toggle('active', i === index); tab.setAttribute('aria-selected', String(i === index)); tab.tabIndex = i === index ? 0 : -1; });
     const panel = document.getElementById('module-preview');
     panel.setAttribute('aria-labelledby', `module-tab-${index}`);
     document.getElementById('module-title').innerHTML = modules[index].title;
     document.getElementById('module-demo').innerHTML = modules[index].demo;
     document.getElementById('module-ai-text').textContent = modules[index].ai;
-    animateSwap(panel);
+    if (animate) animateSwap(panel);
   }
-  moduleTabs.forEach((tab, index) => tab.addEventListener('click', () => selectModule(index)));
-  keyboardTabs(moduleTabs, selectModule, true);
+  moduleTabs.forEach((tab, index) => tab.addEventListener('click', () => { selectModule(index); stopModuleAutoplay(); }));
+  keyboardTabs(moduleTabs, index => { selectModule(index); stopModuleAutoplay(); }, true);
   selectModule(0);
+
+  // Défilement automatique des cartes, une seule fois : 3 s par carte, fondu sortant puis entrant.
+  // Démarre quand la carte devient visible, s'arrête sur la dernière ou dès que l'utilisateur choisit une carte.
+  // En pause au survol ou au focus, désactivé si l'utilisateur réduit les animations.
+  const MODULE_CARD_MS = 3000;
+  const MODULE_FADE_MS = 600;
+  const moduleLayout = document.querySelector('.module-layout');
+  let moduleTimer;
+  let modulePaused = false;
+  let moduleAutoplay = false;
+  function scheduleModuleStep() {
+    clearTimeout(moduleTimer);
+    if (!moduleAutoplay || modulePaused || reducedMotion.matches) return;
+    if (moduleIndex >= modules.length - 1) { moduleAutoplay = false; return; }
+    moduleTimer = setTimeout(() => {
+      modulePanel.classList.add('fading');
+      moduleTimer = setTimeout(() => {
+        selectModule(moduleIndex + 1, false);
+        modulePanel.classList.remove('fading');
+        scheduleModuleStep();
+      }, MODULE_FADE_MS);
+    }, MODULE_CARD_MS - MODULE_FADE_MS);
+  }
+  function stopModuleAutoplay() {
+    moduleAutoplay = false;
+    clearTimeout(moduleTimer);
+    modulePanel.classList.remove('fading');
+  }
+  function setModulePaused(paused) {
+    modulePaused = paused;
+    if (paused) { clearTimeout(moduleTimer); modulePanel.classList.remove('fading'); }
+    else scheduleModuleStep();
+  }
+  moduleLayout.addEventListener('mouseenter', () => setModulePaused(true));
+  moduleLayout.addEventListener('mouseleave', () => setModulePaused(moduleLayout.contains(document.activeElement)));
+  moduleLayout.addEventListener('focusin', () => setModulePaused(true));
+  moduleLayout.addEventListener('focusout', event => { if (!moduleLayout.contains(event.relatedTarget)) setModulePaused(moduleLayout.matches(':hover')); });
+  if ('IntersectionObserver' in window) {
+    const moduleObserver = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        moduleObserver.disconnect();
+        moduleAutoplay = true;
+        scheduleModuleStep();
+      }
+    }, { threshold: 0.5 });
+    moduleObserver.observe(modulePanel);
+  }
 
   const prototypeDialog = document.getElementById('prototype-dialog');
   let demoIndex = 0;
