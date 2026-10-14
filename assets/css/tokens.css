@@ -1,0 +1,34 @@
+:root {
+  /* Couleurs */
+  --renee-cobalt: #2F4BD9;
+  --renee-lait:   #FFFBF4;
+  --renee-encre:  #15152A;
+  --renee-bonbon: #F7A8C4;
+  --renee-beurre: #F8DF72;
+  --renee-sable:  #F4EFE4;
+  --renee-ligne:  #E6E0D3;
+  --renee-ardoise:#5E5C70;
+  --renee-brique: #C2502E;
+
+  /* Typographie */
+  --font-display: 'Bricolage Grotesque', sans-serif; /* 800, ls -0.02 à -0.05em */
+  --font-text:    'Figtree', sans-serif;             /* 400 / 500 / 600 */
+  --text-display: 72px;  --text-h1: 48px;  --text-h2: 32px;  --text-h3: 22px;
+  --text-body-l:  18px;  --text-body: 16px; --text-small: 14px; --text-label: 12px;
+
+  /* Espacements (base 4) */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-20: 80px;
+
+  /* Rayons */
+  --radius-s: 8px; --radius-m: 12px; --radius-l: 20px; --radius-pill: 999px;
+
+  /* Bordures & profondeur */
+  --border-strong: 1.5px solid var(--renee-encre);
+  --border-soft:   1px solid var(--renee-ligne);
+  --shadow-modal:  0 12px 40px rgba(21, 21, 42, .18);
+
+  /* Contrôles */
+  --control-h-mobile: 52px; --control-h-web: 48px;
+  --focus-ring: 0 0 0 3px var(--renee-bonbon);
+}

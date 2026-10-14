@@ -1,0 +1,34 @@
+/* Socle de la page particuliers (la page B2B utilise tokens.css + b2b.css) */
+
+/* Tokens : Renée Design System v1.0 (tokens.css) */
+:root {
+  --cobalt: #2F4BD9; --lait: #FFFBF4; --encre: #15152A; --bonbon: #F7A8C4; --beurre: #F8DF72;
+  --sable: #F4EFE4; --ligne: #E6E0D3; --ardoise: #5E5C70; --brique: #C2502E;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-text: 'Figtree', sans-serif;
+  --radius-s: 8px; --radius-m: 12px; --radius-l: 20px; --radius-pill: 999px;
+  --border-strong: 1.5px solid var(--encre);
+  --border-soft: 1px solid var(--ligne);
+  --focus-ring: 0 0 0 3px var(--bonbon);
+  --wrap: 1440px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--lait); color: var(--encre);
+  font-family: var(--font-text); font-size: 19px; line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 800; margin: 0; line-height: 1.02; }
+p { margin: 0; font-weight: 500;}
+a { color: inherit; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+/* Logo : personnage + logotype bas de casse */
+.mark { display: block; flex: none; }
+.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo span { font-family: var(--font-display); font-weight: 800; font-size: 30px; letter-spacing: -0.05em; color: var(--cobalt); line-height: 1; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 16px; }
+}

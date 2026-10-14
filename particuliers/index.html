@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Renai, l'assistant IA de votre famille</title>
+<meta name="description" content="L'assistant IA de votre famille, pour alléger les démarches et veiller sur vos proches âgés ou en situation de handicap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  body { font-size: 17px; line-height: 1.55; }
+  h1, h2, h3 { letter-spacing: -0.03em; }
+  h2 { font-size: clamp(36px, 4.4vw, 56px); line-height: 1.08; }
+  h2 em { font-style: normal; color: var(--cobalt); display: block; }
+  h3 { font-size: 24px; letter-spacing: -0.02em; line-height: 1.2; }
+  .ico { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--encre); margin-bottom: 20px; }
+  .muted { color: var(--ardoise); }
+
+  /* Boutons rectangulaires arrondis, sans ombre */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    height: 48px; padding: 0 24px; border: 0; border-radius: var(--radius-s);
+    font: 600 16px var(--font-text); text-decoration: none; cursor: pointer;
+    transition: transform .12s ease, background-color .15s ease, color .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:focus-visible, input:focus-visible, a:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+  .btn-cobalt { background: var(--cobalt); color: var(--lait); }
+  .btn-cobalt:hover { background: var(--encre); }
+  .btn-beurre { background: var(--beurre); color: var(--encre); }
+  .btn-beurre:hover { background: var(--lait); }
+  .text-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--cobalt); text-decoration: none; }
+  .text-link:hover { text-decoration: underline; }
+
+  .logo span .dot { color: var(--bonbon); }
+
+  /* Header */
+  header { position: sticky; top: 0; z-index: 10; background: var(--lait); border-bottom: var(--border-soft); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 84px; }
+  header nav { display: flex; align-items: center; gap: 32px; font-size: 15px; }
+  .status { display: inline-flex; align-items: center; gap: 10px; color: var(--ardoise); }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--cobalt); }
+  header nav .link { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; text-decoration: none; }
+  header nav .link:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero { background: var(--cobalt); color: var(--lait); padding: 88px 0 96px; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+  .hero .eyebrow { color: var(--lait); }
+  .wordmark { font-family: var(--font-display); font-weight: 800; font-size: clamp(88px, 12vw, 176px); letter-spacing: -0.05em; line-height: .9; margin-bottom: 36px; }
+  .wordmark span { color: var(--bonbon); }
+  .hero h1 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; margin-bottom: 24px; }
+  .hero .lead { font-size: 19px; max-width: 32em; opacity: .92; }
+  .hero .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 40px; }
+  .hero .actions small { font-size: 14px; opacity: .85; }
+
+  /* Photos : deux cadres ronds + pastilles */
+  .portraits { position: relative; width: 100%; max-width: 560px; aspect-ratio: 826 / 848; margin-left: auto; }
+  .portraits .frame { position: absolute; border-radius: 50%; aspect-ratio: 1; overflow: hidden; }
+  .portraits img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .portraits .big { left: 0; bottom: 0; width: 80%; }
+  .portraits .big img { object-position: 28% 40%; }
+  .portraits .small { right: 0; top: 0; width: 34%; }
+  .portraits .small img { object-position: 62% 50%; transform: scale(1.2); transform-origin: 60% 0; }
+  .portraits .pastille { position: absolute; border-radius: 50%; }
+  .pastille.beurre { background: var(--beurre); width: 15%; aspect-ratio: 1; left: 44%; top: 2%; }
+  .pastille.lait { background: var(--lait); width: 11%; aspect-ratio: 1; right: 4%; bottom: 10%; }
+
+  /* Bandeau sous le hero */
+  .strip { border-bottom: var(--border-soft); }
+  .strip .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px 32px; flex-wrap: wrap; min-height: 76px; padding-top: 16px; padding-bottom: 16px; font-size: 15px; }
+  .strip p { font-weight: 600; }
+  .strip ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 32px; margin: 0; padding: 0; color: var(--ardoise); }
+  .strip li { display: inline-flex; align-items: center; gap: 8px; }
+  .strip li .ico { color: var(--cobalt); }
+
+  section { padding: 112px 0; }
+  .sable { background: var(--sable); }
+
+  /* Ça vous parle ? */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .split h2 em { display: inline; }
+  .echo { font-size: 22px; font-weight: 500; line-height: 1.5; margin: 20px 0 24px; }
+  .split .body p + p, .split .body .text-link { margin-top: 24px; }
+
+  /* Suivi des traitements */
+  .head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+  .chip { display: inline-block; padding: 8px 16px; border: 1.5px solid var(--cobalt); border-radius: var(--radius-pill); color: var(--cobalt); font-size: 14px; font-weight: 600; }
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .feature .visual { aspect-ratio: 1.45; border-radius: var(--radius-s); display: grid; place-items: center; margin-bottom: 28px; overflow: hidden; }
+  .feature .kicker { font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 10px; }
+  .feature h3 { margin-bottom: 12px; }
+  .feature p { color: var(--ardoise); font-size: 16px; }
+  .note { margin-top: 40px; font-size: 14px; color: var(--ardoise); }
+
+  .ill-card { background: #fff; border-radius: var(--radius-m); padding: 20px; }
+  .v-ordo { background: var(--bonbon); }
+  .v-ordo .ill-card { width: 58%; transform: rotate(-6deg); padding: 22px 22px 18px; }
+  .v-ordo b { display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 21px; letter-spacing: -0.02em; color: var(--cobalt); margin-bottom: 14px; }
+  .v-ordo .bar { height: 7px; border-radius: 4px; background: var(--ligne); margin-bottom: 9px; }
+  .v-ordo .ok { display: flex; justify-content: flex-end; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--cobalt); margin-top: 14px; }
+  .v-cal { background: var(--beurre); }
+  .v-cal .ill-card { width: 56%; padding: 14px 16px 16px; }
+  .v-cal .cal-top { display: flex; justify-content: space-between; align-items: center; color: var(--cobalt); font-size: 11px; font-weight: 600; letter-spacing: .06em; margin-bottom: 10px; }
+  .v-cal .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px 2px; text-align: center; font-size: 11px; line-height: 20px; color: var(--ardoise); }
+  .v-cal .grid .d { font-weight: 600; color: var(--encre); }
+  .v-cal .grid .on { background: var(--cobalt); color: var(--lait); border-radius: 5px; font-weight: 600; }
+  .v-cal .ok { display: flex; gap: 6px; align-items: flex-start; font-size: 11px; line-height: 1.3; margin-top: 12px; }
+  .v-cal .ok .ico { color: var(--cobalt); width: 12px; height: 12px; margin-top: 1px; }
+  .v-notif { background: var(--cobalt); }
+  .v-notif .ill-card { width: 78%; display: grid; grid-template-columns: 40px 1fr 14px; gap: 12px; align-items: start; padding: 16px; }
+  .v-notif .av { width: 40px; height: 40px; border-radius: var(--radius-s); background: var(--bonbon); display: grid; place-items: center; }
+  .v-notif small { display: block; font-size: 10px; letter-spacing: .08em; color: var(--ardoise); text-transform: uppercase; }
+  .v-notif strong { display: block; font-size: 14px; line-height: 1.3; margin: 4px 0; }
+  .v-notif span { font-size: 12px; line-height: 1.35; color: var(--ardoise); display: block; }
+  .v-notif .bell { color: var(--ardoise); width: 14px; height: 14px; }
+
+  /* Allié */
+  .ally { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .ally h2 { margin-bottom: 32px; }
+  .ally h2 span { display: block; }
+  .ally p { max-width: 30em; }
+  .chat { background: var(--bonbon); border-radius: var(--radius-s); padding: 48px; aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; }
+  .chat .bubble { border-radius: var(--radius-s); padding: 20px 24px; }
+  .chat .them { background: var(--lait); margin: 32px 0 20px auto; width: 78%; font-size: 16px; }
+  .chat .us { background: var(--cobalt); color: var(--lait); width: 82%; font-family: var(--font-display); font-weight: 800; font-size: clamp(19px, 1.8vw, 24px); letter-spacing: -0.02em; line-height: 1.25; }
+  .chat .caption { margin-top: 24px; font-size: 14px; }
+
+  /* Construisons ensemble */
+  .together { background: var(--beurre); }
+  .together .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .together h2 { margin-bottom: 28px; }
+  .together .intro p { max-width: 28em; margin-bottom: 28px; }
+  .signup h3 { font-size: 30px; margin-bottom: 10px; }
+  .signup > p { color: var(--encre); opacity: .75; margin-bottom: 28px; }
+  .signup label.lbl { display: block; font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .row-input { display: flex; gap: 10px; }
+  .input { flex: 1; display: flex; align-items: center; gap: 10px; background: var(--lait); border: 1px solid var(--ligne); border-radius: var(--radius-s); padding: 0 14px; height: 48px; }
+  .input .ico { color: var(--ardoise); }
+  .input input { flex: 1; min-width: 0; border: 0; background: transparent; height: 100%; font: 400 16px var(--font-text); color: var(--encre); }
+  .input input:focus-visible { box-shadow: none; }
+  .input:focus-within { box-shadow: var(--focus-ring); }
+  .consent { display: flex; gap: 12px; align-items: flex-start; margin-top: 18px; font-size: 14px; cursor: pointer; }
+  .consent input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--cobalt); flex: none; }
+  .signup .fine { margin-top: 14px; font-size: 13px; color: var(--encre); opacity: .7; }
+  .signup .error { display: none; margin-top: 12px; font-size: 14px; font-weight: 600; color: var(--brique); }
+  .signup.invalid .error { display: block; }
+  .signup .sent { display: none; }
+  .signup.done form { display: none; }
+  .signup.done .sent { display: flex; gap: 16px; align-items: center; background: var(--lait); border-radius: var(--radius-s); padding: 20px 24px; font-weight: 600; }
+
+  footer { padding: 36px 0; font-size: 14px; color: var(--ardoise); }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px 32px; flex-wrap: wrap; }
+  footer .logo span { font-size: 26px; }
+
+  @media (max-width: 1080px) {
+    .features { grid-template-columns: 1fr; max-width: 560px; }
+  }
+  @media (max-width: 960px) {
+    header .status { display: none; }
+    .hero .wrap, .split, .ally, .together .wrap { grid-template-columns: 1fr; gap: 48px; }
+    .hero .portraits { order: -1; max-width: 320px; margin: 0 auto; }
+    .chat { max-width: 520px; }
+  }
+  @media (max-width: 640px) {
+    header .wrap { height: 68px; }
+    header nav .link { display: none; }
+    header .btn { height: 40px; padding: 0 14px; font-size: 14px; white-space: nowrap; gap: 6px; }
+    .logo span { font-size: 26px; }
+    .hero { padding: 48px 0 64px; }
+    .hero .portraits { max-width: 240px; }
+    .wordmark { margin-bottom: 24px; }
+    section { padding: 72px 0; }
+    .btn { height: 52px; }
+    .chat { padding: 28px; aspect-ratio: auto; }
+    .row-input { flex-direction: column; }
+    .row-input .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Personnage « complice » : un rond + un chignon (Renee Mark) -->
+    <symbol id="renai-complice" viewBox="0 0 100 100">
+      <circle cx="50" cy="20" r="20" fill="var(--body, #2F4BD9)"/>
+      <circle cx="50" cy="58" r="42" fill="var(--body, #2F4BD9)"/>
+      <path d="M30.3 58.5a5.7 5.7 0 0 1 11.4 0M58.3 58.5a5.7 5.7 0 0 1 11.4 0" fill="none" stroke="var(--face, #FFFBF4)" stroke-width="4.5" stroke-linecap="round"/>
+      <path d="M41.5 70.5q9.5 8 19 -3" fill="none" stroke="var(--face, #FFFBF4)" stroke-width="4.5" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15zM10 20.5h4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Renai, accueil">
+      <svg class="mark" width="40" height="40"><use href="#renai-complice"/></svg>
+      <span>renai<span class="dot">.</span></span>
+    </a>
+    <nav>
+      <span class="status">En cours de création, avec vous</span>
+      <!-- À brancher : lien du sondage -->
+      <a class="link survey-link" href="#ensemble">Donner mon avis <svg class="ico"><use href="#i-out"/></svg></a>
+      <a class="btn btn-cobalt" href="#inscription">Être informé du lancement <svg class="ico"><use href="#i-arrow"/></svg></a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow"><svg class="ico"><use href="#i-heart"/></svg>Pour ceux qui prennent soin des autres</p>
+        <p class="wordmark" aria-hidden="true">Renai<span>.</span></p>
+        <h1>Prendre soin,<br>sans tout porter seul.</h1>
+        <p class="lead">L'assistant IA de votre famille, pour alléger les démarches et veiller sur vos proches âgés ou en situation de handicap.</p>
+        <div class="actions">
+          <a class="btn btn-beurre" href="#inscription">Tenons-nous au courant <svg class="ico"><use href="#i-arrow"/></svg></a>
+          <small>Bientôt à vos côtés.</small>
+        </div>
+      </div>
+
+      <div class="portraits">
+        <span class="pastille beurre" aria-hidden="true"></span>
+        <div class="frame small"><img src="../assets/daughter-with-mother.jpg" alt="Une fille enlace sa mère âgée, assise dans un fauteuil" width="612" height="408"></div>
+        <div class="frame big"><img src="../assets/sons-with-Father.jpg" alt="Deux fils rient avec leur père âgé dans un jardin" width="1000" height="667"></div>
+        <span class="pastille lait" aria-hidden="true"></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <p>Moins de charge mentale. Plus de présence.</p>
+      <ul>
+        <li><svg class="ico"><use href="#i-check"/></svg>Pour les aidants</li>
+        <li><svg class="ico"><use href="#i-check"/></svg>Pour les familles</li>
+        <li><svg class="ico"><use href="#i-check"/></svg>Pour vos proches</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Ça vous parle ? -->
+  <section>
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Ça vous parle ?</p>
+        <h2>Dans la famille,<br>c'est souvent<br><em>vous.</em></h2>
+      </div>
+      <div class="body">
+        <p class="echo">Les papiers. Les rendez-vous.<br>Les décisions. Et les nouvelles à donner.</p>
+        <p class="muted">Vous veillez sur un parent, vous pensez à tout… pendant que les autres demandent comment ça va. Prendre soin ne devrait pas vouloir dire tout gérer, tout seul.</p>
+        <a class="text-link" href="#traitements"><svg width="22" height="22"><use href="#renai-complice"/></svg>Et si vous aviez un coup de main ?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Suivi des traitements -->
+  <section id="traitements" class="sable">
+    <div class="wrap">
+      <p class="eyebrow">Un premier pas, très concret</p>
+      <div class="head-row">
+        <h2>Le suivi des traitements,<em>un souci de moins.</em></h2>
+        <span class="chip">Dans notre première version</span>
+      </div>
+
+      <div class="features">
+        <article class="feature">
+          <div class="visual v-ordo" aria-hidden="true">
+            <div class="ill-card">
+              <b>Ordonnance <svg class="ico"><use href="#i-camera"/></svg></b>
+              <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar" style="width:62%"></div>
+              <div class="ok"><svg class="ico" style="width:12px;height:12px"><use href="#i-check"/></svg>À votre pharmacie</div>
+            </div>
+          </div>
+          <p class="kicker">01 · Photographier</p>
+          <h3>Une photo. C'est parti.</h3>
+          <p>Photographiez l'ordonnance : Renai la transmettra automatiquement à la pharmacie. Une démarche de moins à gérer.</p>
+        </article>
+
+        <article class="feature">
+          <div class="visual v-cal" aria-hidden="true">
+            <div class="ill-card">
+              <div class="cal-top"><svg class="ico"><use href="#i-cal"/></svg>SUIVI MÉDICAL</div>
+              <div class="grid">
+                <span class="d">L</span><span class="d">M</span><span class="d">M</span><span class="d">J</span><span class="d">V</span><span class="d">S</span><span class="d">D</span>
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+                <span>8</span><span>9</span><span class="on">10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+              </div>
+              <div class="ok"><svg class="ico"><use href="#i-check"/></svg>Avant la fin de l'ordonnance</div>
+            </div>
+          </div>
+          <p class="kicker">02 · Anticiper</p>
+          <h3>Le bon rendez-vous.</h3>
+          <p>Renai prévoira le rendez-vous de suivi avec le médecin avant l'expiration de l'ordonnance. Pour ne pas attendre le dernier moment.</p>
+        </article>
+
+        <article class="feature">
+          <div class="visual v-notif" aria-hidden="true">
+            <div class="ill-card">
+              <div class="av"><svg width="26" height="26"><use href="#renai-complice"/></svg></div>
+              <div>
+                <small>Renai · Rappel</small>
+                <strong>C'est l'heure du traitement.</strong>
+                <span>Un petit rappel, tout simplement.</span>
+              </div>
+              <svg class="ico bell"><use href="#i-bell"/></svg>
+            </div>
+          </div>
+          <p class="kicker">03 · Accompagner</p>
+          <h3>Un rappel attentionné.</h3>
+          <p>Votre proche recevra des rappels de prise de médicaments. Un repère au quotidien, sans que tout repose sur votre mémoire.</p>
+        </article>
+      </div>
+
+      <p class="note">Fonctionnalités en préparation. Renai accompagnera l'organisation du suivi, sans remplacer un professionnel de santé.</p>
+    </div>
+  </section>
+
+  <!-- Allié -->
+  <section>
+    <div class="wrap ally">
+      <div>
+        <p class="eyebrow">Plus qu'un assistant. Un allié.</p>
+        <h2><span>Il comprend.</span><span>Il prépare.</span><em>Il vous soulage.</em></h2>
+        <p class="muted">Notre ambition : un assistant IA de famille qui comprend votre situation, prépare les démarches et vous aide à les mener à bien. Pour garder votre énergie pour ce qui compte vraiment.</p>
+      </div>
+      <div class="chat">
+        <svg width="56" height="56" aria-hidden="true"><use href="#renai-complice"/></svg>
+        <p class="bubble them">«&nbsp;J'aimerais juste passer du temps avec maman, sans penser aux papiers.&nbsp;»</p>
+        <p class="bubble us">Vous prenez soin d'elle.<br>On s'occupe du reste.</p>
+        <p class="caption">Voilà l'idée derrière Renai.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Construisons ensemble -->
+  <section id="ensemble" class="together">
+    <div class="wrap">
+      <div class="intro">
+        <p class="eyebrow">Construisons Renai ensemble</p>
+        <h2>Les premiers pas,<em>avec vous.</em></h2>
+        <p>Vous êtes aidant, proche ou simplement concerné ? Votre quotidien nous aide à imaginer un assistant vraiment utile.</p>
+        <!-- À brancher : lien du sondage -->
+        <a class="text-link survey-link" href="#ensemble">Partager mon expérience dans le sondage <svg class="ico"><use href="#i-out"/></svg></a>
+      </div>
+
+      <div class="signup" id="inscription">
+        <h3>On vous prévient quand c'est prêt ?</h3>
+        <p>Laissez-nous votre email pour être informé du lancement.</p>
+        <form id="signup-form" novalidate>
+          <label class="lbl" for="email">Votre adresse email</label>
+          <div class="row-input">
+            <div class="input">
+              <svg class="ico"><use href="#i-mail"/></svg>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.fr" required>
+            </div>
+            <button class="btn btn-cobalt" type="submit">Me tenir au courant <svg class="ico"><use href="#i-arrow"/></svg></button>
+          </div>
+          <label class="consent"><input type="checkbox" name="consent" required>J'accepte que Renai utilise mon email pour m'informer de son lancement.</label>
+          <p class="error" role="alert">Indiquez une adresse email valide et cochez la case pour continuer.</p>
+          <p class="fine">Votre email est conservé pour cette inscription. Aucune donnée de santé n'est demandée.</p>
+        </form>
+        <div class="sent" role="status">
+          <svg width="48" height="48" aria-hidden="true"><use href="#renai-complice"/></svg>
+          <span>C'est noté. On vous écrit dès que Renai est prêt.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Renai, retour en haut">
+      <svg class="mark" width="32" height="32"><use href="#renai-complice"/></svg>
+      <span>renai.</span>
+    </a>
+    <p>Un peu moins de démarches. Un peu plus de moments ensemble.</p>
+    <p>© 2026 Renai</p>
+  </div>
+</footer>
+
+<script>
+  // À brancher : URL du sondage (Tally, Typeform...). Vide = les liens restent sur la section « Construisons ensemble ».
+  const SURVEY_URL = "";
+  // À brancher : URL qui reçoit les inscriptions. Vide = confirmation locale uniquement.
+  const SIGNUP_ENDPOINT = "";
+
+  if (SURVEY_URL) document.querySelectorAll('.survey-link').forEach(a => {
+    a.href = SURVEY_URL; a.target = '_blank'; a.rel = 'noopener';
+  });
+
+  const box = document.querySelector('.signup');
+  const form = document.getElementById('signup-form');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const invalid = [...form.querySelectorAll('[required]')].find(f => !f.checkValidity());
+    box.classList.toggle('invalid', !!invalid);
+    if (invalid) { invalid.focus(); return; }
+    const data = { email: form.email.value, consent: true, source: 'particuliers' };
+    if (SIGNUP_ENDPOINT) {
+      try {
+        await fetch(SIGNUP_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      } catch (err) { console.error(err); }
+    } else {
+      console.log('Inscription (aucun endpoint configuré) :', data);
+    }
+    box.classList.add('done');
+  });
+</script>
+</body>
+</html>
