@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/base.css">
+<script src="../assets/js/config.js"></script>
 <style>
   body { font-size: 17px; line-height: 1.55; }
   h1, h2, h3 { letter-spacing: -0.03em; }
@@ -146,6 +147,7 @@
   .signup h3 { font-size: 30px; margin-bottom: 10px; }
   .signup > p { color: var(--encre); opacity: .75; margin-bottom: 28px; }
   .signup label.lbl { display: block; font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .row-names { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
   .row-input { display: flex; gap: 10px; }
   .input { flex: 1; display: flex; align-items: center; gap: 10px; background: var(--lait); border: 1px solid var(--ligne); border-radius: var(--radius-s); padding: 0 14px; height: 48px; }
   .input .ico { color: var(--ardoise); }
@@ -156,7 +158,7 @@
   .consent input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--cobalt); flex: none; }
   .signup .fine { margin-top: 14px; font-size: 13px; color: var(--encre); opacity: .7; }
   .signup .error { display: none; margin-top: 12px; font-size: 14px; font-weight: 600; color: var(--brique); }
-  .signup.invalid .error { display: block; }
+  .signup.invalid .error-fields, .signup.failed .error-send { display: block; }
   .signup .sent { display: none; }
   .signup.done form { display: none; }
   .signup.done .sent { display: flex; gap: 16px; align-items: center; background: var(--lait); border-radius: var(--radius-s); padding: 20px 24px; font-weight: 600; }
@@ -186,6 +188,7 @@
     .btn { height: 52px; }
     .chat { padding: 28px; aspect-ratio: auto; }
     .row-input { flex-direction: column; }
+    .row-names { grid-template-columns: 1fr; }
     .row-input .btn { width: 100%; }
   }
 </style>
@@ -370,8 +373,18 @@
 
       <div class="signup" id="inscription">
         <h3>On vous prévient quand c'est prêt ?</h3>
-        <p>Laissez-nous votre email pour être informé du lancement.</p>
+        <p>Laissez-nous vos coordonnées pour être informé du lancement.</p>
         <form id="signup-form" novalidate>
+          <div class="row-names">
+            <div>
+              <label class="lbl" for="firstname">Prénom</label>
+              <div class="input"><input id="firstname" name="firstname" type="text" autocomplete="given-name" required></div>
+            </div>
+            <div>
+              <label class="lbl" for="lastname">Nom</label>
+              <div class="input"><input id="lastname" name="lastname" type="text" autocomplete="family-name" required></div>
+            </div>
+          </div>
           <label class="lbl" for="email">Votre adresse email</label>
           <div class="row-input">
             <div class="input">
@@ -380,9 +393,10 @@
             </div>
             <button class="btn btn-cobalt" type="submit">Me tenir au courant <svg class="ico"><use href="#i-arrow"/></svg></button>
           </div>
-          <label class="consent"><input type="checkbox" name="consent" required>J'accepte que Renai utilise mon email pour m'informer de son lancement.</label>
-          <p class="error" role="alert">Indiquez une adresse email valide et cochez la case pour continuer.</p>
-          <p class="fine">Votre email est conservé pour cette inscription. Aucune donnée de santé n'est demandée.</p>
+          <label class="consent"><input type="checkbox" name="consent" required><span id="consent-text">J'accepte que Renai utilise mon email pour m'informer de son lancement.</span></label>
+          <p class="error error-fields" role="alert">Indiquez votre prénom, votre nom, une adresse email valide et cochez la case pour continuer.</p>
+          <p class="error error-send" role="alert">L'inscription n'a pas pu être envoyée. Veuillez réessayer dans un instant.</p>
+          <p class="fine">Vos coordonnées sont conservées pour cette inscription. Aucune donnée de santé n'est demandée.</p>
         </form>
         <div class="sent" role="status">
           <svg width="48" height="48" aria-hidden="true"><use href="#renai-complice"/></svg>
@@ -407,9 +421,24 @@
 
 <script>
   // À brancher : URL du sondage (Tally, Typeform...). Vide = les liens restent sur la section « Construisons ensemble ».
-  const SURVEY_URL = "";
-  // À brancher : URL qui reçoit les inscriptions. Vide = confirmation locale uniquement.
-  const SIGNUP_ENDPOINT = "";
+  const SURVEY_URL = "https://tally.so/r/44WY8r";
+  // Inscriptions envoyées au formulaire HubSpot HUBSPOT_PARTICULIERS (assets/js/config.js).
+  // FORM_GUID vide = confirmation locale uniquement.
+  const contact = window.RENAI_CONTACT || {};
+  const hubspot = { ...contact.HUBSPOT, ...contact.HUBSPOT_PARTICULIERS };
+  const SIGNUP_ENDPOINT = hubspot.PORTAL_ID && hubspot.FORM_GUID
+    ? `${hubspot.API_HOST || 'https://api.hsforms.com'}/submissions/v3/integration/submit/${encodeURIComponent(hubspot.PORTAL_ID)}/${encodeURIComponent(hubspot.FORM_GUID)}`
+    : '';
+
+  function hubspotPayload(data) {
+    const hutk = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/)?.[1];
+    const fields = ['firstname', 'lastname', 'email'].map(name => ({ objectTypeId: '0-1', name, value: data[name] }));
+    // Base légale RGPD : consentement explicite donné par la case à cocher.
+    const text = document.getElementById('consent-text').textContent.trim();
+    const consent = { consentToProcess: true, text };
+    if (hubspot.SUBSCRIPTION_TYPE_ID) consent.communications = [{ value: true, subscriptionTypeId: Number(hubspot.SUBSCRIPTION_TYPE_ID), text }];
+    return { fields, context: { ...(hutk && { hutk }), pageUri: location.href, pageName: document.title }, legalConsentOptions: { consent } };
+  }
 
   if (SURVEY_URL) document.querySelectorAll('.survey-link').forEach(a => {
     a.href = SURVEY_URL; a.target = '_blank'; a.rel = 'noopener';
@@ -417,16 +446,30 @@
 
   const box = document.querySelector('.signup');
   const form = document.getElementById('signup-form');
+  const submit = form.querySelector('[type=submit]');
   form.addEventListener('submit', async e => {
     e.preventDefault();
+    box.classList.remove('failed');
     const invalid = [...form.querySelectorAll('[required]')].find(f => !f.checkValidity());
     box.classList.toggle('invalid', !!invalid);
     if (invalid) { invalid.focus(); return; }
-    const data = { email: form.email.value, consent: true, source: 'particuliers' };
+    const data = {
+      firstname: form.firstname.value.trim(),
+      lastname: form.lastname.value.trim(),
+      email: form.email.value.trim()
+    };
     if (SIGNUP_ENDPOINT) {
+      submit.disabled = true;
       try {
-        await fetch(SIGNUP_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      } catch (err) { console.error(err); }
+        const response = await fetch(SIGNUP_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(hubspotPayload(data)), signal: AbortSignal.timeout(15000) });
+        if (!response.ok) {
+          console.error('Renai — échec de l’inscription', response.status, await response.text().catch(() => ''));
+          throw new Error('Request failed');
+        }
+      } catch {
+        box.classList.add('failed');
+        return;
+      } finally { submit.disabled = false; }
     } else {
       console.log('Inscription (aucun endpoint configuré) :', data);
     }
