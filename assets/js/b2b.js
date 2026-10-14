@@ -252,9 +252,21 @@
       track('faq_ouverture', { question: question.slice(0, 100) });
     });
   });
+  // Les liens « Rejoindre le pilote » (data-request) présélectionnent le type de demande dans le formulaire.
+  document.querySelectorAll('[data-request]').forEach(link => link.addEventListener('click', () => {
+    const choice = [...form.querySelectorAll('input[name=request]')].find(input => input.value === link.dataset.request);
+    if (choice) choice.checked = true;
+    track('cta_clic', { cta: link.dataset.request });
+  }));
   const submit = form.querySelector('[type=submit]');
   function requestText(data) {
-    return `Bonjour,\n\nJe souhaite échanger sur les premiers tests et un projet de pilote Renai.\n\nPrénom et nom : ${data.firstname} ${data.lastname}\nOrganisme : ${data.organization}\nE-mail : ${data.email}\n\nContexte :\n${data.context || 'À préciser lors de notre échange.'}\n\nMerci,\n${data.firstname} ${data.lastname}`;
+    return `Bonjour,\n\nJe souhaite échanger sur un projet de pilote Renai.\n\nDemande : ${data.request || 'Demander une démo'}\nPrénom et nom : ${data.firstname} ${data.lastname}\nOrganisme : ${data.organization}\nE-mail : ${data.email}\n\nContexte :\n${data.context || 'À préciser lors de notre échange.'}\n\nMerci,\n${data.firstname} ${data.lastname}`;
+  }
+  // Le type de demande est ajouté en tête du champ HubSpot « message » (pas de nouveau champ à créer dans HubSpot).
+  function withRequest(data) {
+    const { request, ...rest } = data;
+    if (!request) return rest;
+    return { ...rest, context: [`Demande : ${request}`, String(rest.context || '').trim()].filter(Boolean).join('\n\n') };
   }
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -269,7 +281,7 @@
       submit.disabled = true;
       submit.setAttribute('aria-busy', 'true');
       try {
-        const body = hubspotEndpoint ? hubspotPayload(data) : data;
+        const body = hubspotEndpoint ? hubspotPayload(withRequest(data)) : data;
         const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(15000) });
         if (!response.ok) {
           console.error('Renai — échec de l’envoi du formulaire', response.status, await response.text().catch(() => ''));
@@ -277,7 +289,7 @@
         }
         status.style.color = 'var(--renee-cobalt)';
         status.textContent = 'Votre demande a été envoyée. Merci pour votre intérêt pour Renai.';
-        track('formulaire_envoye', { form_id: 'pilot-form' });
+        track('formulaire_envoye', { form_id: 'pilot-form', demande: data.request || '' });
         form.reset();
       } catch {
         status.style.color = 'var(--renee-brique)';

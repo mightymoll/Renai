@@ -93,3 +93,78 @@ h2,.problem-title h2,.solution-intro h2,.human-copy h2,.pilot-heading h2,.roadma
 .phone-action{align-self:flex-end;background:var(--renee-cobalt);color:var(--renee-lait);font-size:13px;font-weight:600;border-radius:99px;padding:8px 14px}
 .phone-cta{margin-top:12px;background:var(--renee-encre);color:var(--renee-lait);border-radius:99px;text-align:center;font-size:15px;font-weight:600;padding:12px}
 @media(max-width:680px){.module-phone{width:min(100%,310px)}}
+
+/* ===== Chiffres clés (DREES) ===== */
+.figures-section{display:grid;grid-template-columns:.9fr 1.5fr;gap:40px 80px;align-items:end}
+.figures-intro h2 span{color:var(--renee-cobalt)}
+.figures-intro p{margin-top:22px;font-size:19px;max-width:420px;color:var(--renee-encre);line-height:1.4}
+.figures-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:32px}
+.figure{border-top:1.5px solid var(--renee-encre);padding-top:20px}
+.figure strong{display:block;font-family:var(--font-display);font-weight:800;font-size:clamp(40px,4.2vw,60px);line-height:1;letter-spacing:-.045em;color:var(--renee-cobalt);white-space:nowrap}
+.figure p{margin-top:14px;font-size:17px;line-height:1.4}
+.figures-source{grid-column:1/-1;font-size:14px;color:var(--renee-ardoise);line-height:1.5}
+.figures-source a{text-decoration:underline;text-underline-offset:3px}
+.figures-source a:hover{color:var(--renee-cobalt)}
+
+/* ===== Ce que Renai apporte à l'organisme ===== */
+.value-section{border-top:1px solid var(--renee-ligne)}
+.value-intro h2 span{color:var(--renee-cobalt)}
+.value-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+.value-grid article{border:1.5px solid var(--renee-encre);border-radius:20px;padding:26px 24px 28px;background:var(--renee-lait)}
+.value-grid article:nth-child(odd) .icon{background:var(--renee-beurre)}
+.value-grid article:nth-child(even) .icon{background:var(--renee-bonbon)}
+.value-grid .icon{width:46px;height:46px;padding:11px;border-radius:50%;color:var(--renee-encre)}
+.value-grid h3{font-size:24px;line-height:1.15;margin-top:22px}
+.value-grid p{margin-top:12px;font-size:17px;line-height:1.4}
+
+/* ===== Pilote : 4 indicateurs, note et bouton ===== */
+.measurement-grid{grid-template-columns:repeat(4,1fr)}
+.measurement-grid>div:nth-child(4) span{background:var(--renee-beurre)}
+.measurement-note{padding:16px 25px;border-top:1px solid var(--renee-ligne);font-size:15px;color:var(--renee-ardoise);line-height:1.45}
+.pilot-cta{margin-top:36px;display:flex;justify-content:center}
+
+/* ===== Données et consentement ===== */
+.trust-section{display:grid;grid-template-columns:.8fr 1.6fr;gap:40px 80px;align-items:start}
+.trust-intro h2 span{color:var(--renee-cobalt)}
+.trust-intro p{margin-top:22px;font-size:19px;max-width:380px;line-height:1.4}
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.trust-card{border:1.5px solid var(--renee-encre);border-radius:20px;padding:28px 26px}
+.trust-card:first-child{background:var(--renee-sable)}
+.trust-card h3{font-size:27px;line-height:1.1}
+.trust-card .human-principles{margin-top:22px}
+
+/* ===== Formulaire : type de demande ===== */
+.request-choice{border:0;padding:0;margin:20px 0 18px;display:flex;flex-wrap:wrap;gap:8px}
+.request-choice legend{font-size:13px;font-weight:600;padding:0;margin-bottom:8px;width:100%}
+.contact-form-wrap .request-choice label{margin:0;position:relative;font-size:15px}
+.contact-form-wrap .request-choice input{position:absolute;opacity:0;width:1px;height:1px;min-height:0;margin:0;padding:0}
+.request-choice span{display:inline-flex;align-items:center;min-height:42px;padding:9px 16px;border:1.5px solid var(--renee-encre);border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.request-choice input:checked+span{background:var(--renee-encre);color:var(--renee-lait)}
+.request-choice span:hover{background:var(--renee-sable)}
+.request-choice input:checked+span:hover{background:var(--renee-cobalt)}
+.request-choice input:focus-visible+span{outline:3px solid var(--renee-cobalt);outline-offset:3px}
+
+@media(max-width:1100px){
+  .figures-section,.trust-section{grid-template-columns:1fr;gap:36px}
+  .value-grid{grid-template-columns:1fr 1fr}
+  .measurement-grid{grid-template-columns:1fr 1fr}
+  .measurement-grid>div:nth-child(2){border-right:0}
+  .measurement-grid>div:nth-child(-n+2){border-bottom:1px solid var(--renee-ligne)}
+}
+@media(max-width:850px){
+  .figures-grid{grid-template-columns:1fr;gap:24px}
+  .figure{display:grid;grid-template-columns:minmax(150px,auto) 1fr;gap:18px;align-items:baseline}
+  .figure p{margin-top:0}
+  .trust-grid{grid-template-columns:1fr}
+  .measurement-grid{grid-template-columns:1fr}
+  .measurement-grid>div{border-right:0;border-bottom:1px solid var(--renee-ligne)}
+}
+@media(max-width:680px){
+  .value-grid{grid-template-columns:1fr;margin-top:32px}
+  .figure{grid-template-columns:1fr;gap:8px}
+  .figure strong{font-size:44px}
+  .figures-intro p,.trust-intro p{font-size:18px}
+  .trust-card{padding:24px 20px}
+  .measurement-note{padding:14px 22px}
+  .pilot-cta .button{width:100%}
+}
