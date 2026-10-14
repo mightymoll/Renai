@@ -143,8 +143,21 @@
   });
 
   const contact = window.RENAI_CONTACT || {};
-  const endpoint = contact.CONTACT_ENDPOINT || '';
+  const hubspot = contact.HUBSPOT || {};
+  const hubspotEndpoint = hubspot.PORTAL_ID && hubspot.FORM_GUID
+    ? `${hubspot.API_HOST || 'https://api.hsforms.com'}/submissions/v3/integration/submit/${encodeURIComponent(hubspot.PORTAL_ID)}/${encodeURIComponent(hubspot.FORM_GUID)}`
+    : '';
+  const endpoint = hubspotEndpoint || contact.CONTACT_ENDPOINT || '';
   const email = contact.CONTACT_EMAIL || '';
+  // Correspondance entre les champs du formulaire et les propriétés de contact HubSpot.
+  const hubspotFields = { firstname: 'firstname', lastname: 'lastname', organization: 'company', email: 'email', context: 'message' };
+  function hubspotPayload(data) {
+    const hutk = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/)?.[1];
+    const fields = Object.entries(hubspotFields)
+      .map(([key, name]) => ({ objectTypeId: '0-1', name, value: String(data[key] || '').trim() }))
+      .filter(field => field.value);
+    return { fields, context: { ...(hutk && { hutk }), pageUri: location.href, pageName: document.title } };
+  }
   const form = document.getElementById('pilot-form');
   const submit = form.querySelector('[type=submit]');
   if (endpoint || email) {
@@ -167,8 +180,12 @@
       submit.disabled = true;
       submit.setAttribute('aria-busy', 'true');
       try {
-        const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data), signal: AbortSignal.timeout(15000) });
-        if (!response.ok) throw new Error('Request failed');
+        const body = hubspotEndpoint ? hubspotPayload(data) : data;
+        const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(15000) });
+        if (!response.ok) {
+          console.error('Renai — échec de l’envoi du formulaire', response.status, await response.text().catch(() => ''));
+          throw new Error('Request failed');
+        }
         status.style.color = 'var(--renee-cobalt)';
         status.textContent = 'Votre demande a été envoyée. Merci pour votre intérêt pour Renai.';
         form.reset();
