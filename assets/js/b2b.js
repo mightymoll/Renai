@@ -227,6 +227,23 @@
     return payload;
   }
   const form = document.getElementById('pilot-form');
+  // Suivi Google Analytics 4 (sans effet si la balise GA4 est absente ou bloquée).
+  function track(name, params) {
+    try { if (typeof window.gtag === 'function') window.gtag('event', name, params); } catch {}
+  }
+  let formStarted = false;
+  form.addEventListener('input', event => {
+    if (formStarted || event.target.name === 'website') return;
+    formStarted = true;
+    track('formulaire_commence', { form_id: 'pilot-form', premier_champ: event.target.name });
+  });
+  document.querySelectorAll('.faq-list details').forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (!item.open) return;
+      const question = item.querySelector('summary')?.firstChild?.textContent.trim() || '';
+      track('faq_ouverture', { question: question.slice(0, 100) });
+    });
+  });
   const submit = form.querySelector('[type=submit]');
   function requestText(data) {
     return `Bonjour,\n\nJe souhaite échanger sur les premiers tests et un projet de pilote Renai.\n\nPrénom et nom : ${data.firstname} ${data.lastname}\nOrganisme : ${data.organization}\nE-mail : ${data.email}\n\nContexte :\n${data.context || 'À préciser lors de notre échange.'}\n\nMerci,\n${data.firstname} ${data.lastname}`;
@@ -252,6 +269,7 @@
         }
         status.style.color = 'var(--renee-cobalt)';
         status.textContent = 'Votre demande a été envoyée. Merci pour votre intérêt pour Renai.';
+        track('formulaire_envoye', { form_id: 'pilot-form' });
         form.reset();
       } catch {
         status.style.color = 'var(--renee-brique)';
