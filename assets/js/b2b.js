@@ -147,10 +147,6 @@
   const email = contact.CONTACT_EMAIL || '';
   const form = document.getElementById('pilot-form');
   const submit = form.querySelector('[type=submit]');
-  if (endpoint || email) {
-    submit.firstChild.textContent = endpoint ? 'Envoyer ma demande ' : 'Préparer mon e-mail ';
-    document.getElementById('form-note').textContent = endpoint ? 'Vos coordonnées servent uniquement à vous recontacter au sujet de Renai.' : 'Votre logiciel de messagerie s’ouvrira avec une demande prête à envoyer.';
-  }
   function requestText(data) {
     return `Bonjour,\n\nJe souhaite échanger sur les premiers tests et un projet de pilote Renai.\n\nPrénom et nom : ${data.firstname} ${data.lastname}\nOrganisme : ${data.organization}\nE-mail : ${data.email}\n\nContexte :\n${data.context || 'À préciser lors de notre échange.'}\n\nMerci,\n${data.firstname} ${data.lastname}`;
   }
