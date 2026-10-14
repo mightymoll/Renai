@@ -63,3 +63,33 @@ h2,.problem-title h2,.solution-intro h2,.human-copy h2,.pilot-heading h2,.roadma
 
 /* Rotation automatique des cartes du module */
 .module-preview>*{transition:opacity .6s ease-in-out}.module-preview.fading>*{opacity:0}
+
+/* Aperçu en téléphone : un écran par fonction */
+.module-phone{justify-self:center;width:min(100%,340px);aspect-ratio:9/16;min-height:0;padding:11px;background:var(--renee-encre);border:0;border-radius:46px;box-shadow:0 0 0 1.5px #444454,0 24px 60px rgba(0,0,0,.35)}
+.module-phone>*{transition:none}
+.module-phone.fading>*{opacity:1}
+.phone-screen{height:100%;background:var(--renee-lait);border-radius:36px;padding:14px 18px 18px;display:flex;flex-direction:column;overflow:hidden}
+.phone-time{align-self:center;font-size:13px;font-weight:600;line-height:1}
+.module-phone .phone-title{font-family:var(--font-display);font-weight:800;font-size:32px;line-height:1;letter-spacing:-.04em;color:var(--renee-encre);min-height:0;margin:22px 0 16px}
+.phone-feed{display:flex;flex-direction:column;gap:12px;flex:1;min-height:0}
+.phone-title,.phone-feed{transition:opacity .6s ease-in-out}
+.module-phone.fading .phone-title,.module-phone.fading .phone-feed{opacity:0}
+.phone-bubble{align-self:flex-start;background:var(--renee-bonbon);padding:10px 15px;border-radius:18px 18px 18px 4px;font-size:15px;line-height:1.35}
+.phone-card{display:flex;gap:11px;align-items:flex-start;border:1.5px solid var(--renee-encre);border-radius:18px;padding:14px 13px}
+.phone-card.is-butter{background:var(--renee-beurre);border-color:transparent}
+.phone-card.is-sand{background:var(--renee-sable);border-color:transparent}
+.phone-avatar{width:34px;height:34px;border-radius:10px;background:var(--renee-bonbon);display:grid;place-items:center;flex-shrink:0;color:var(--renee-cobalt)}
+.phone-card.is-butter .phone-avatar,.phone-card.is-sand .phone-avatar{background:var(--renee-lait)}
+.phone-avatar svg{width:24px;height:24px}
+.phone-label{display:block;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--renee-ardoise);margin-bottom:3px}
+.phone-card p{font-size:15.5px;line-height:1.38}
+.phone-attachment{display:flex;gap:12px;align-items:center;background:var(--renee-sable);border:1px solid var(--renee-ligne);border-radius:14px;padding:13px}
+.phone-attachment strong{display:block;font-size:15px;line-height:1.25}
+.phone-attachment small{display:block;font-size:12px;color:var(--renee-ardoise);margin-top:3px}
+.phone-attachment .document-sheet{width:34px;height:46px;padding:8px 6px;gap:4px}
+.phone-attachment .calendar-tile{width:44px}
+.phone-attachment .calendar-tile strong{font-size:19px}
+.phone-attachment .pharmacy-cross{background:var(--renee-cobalt);color:var(--renee-lait);border-radius:8px;font-size:22px;width:34px;height:34px;display:grid;place-items:center;flex-shrink:0}
+.phone-action{align-self:flex-end;background:var(--renee-cobalt);color:var(--renee-lait);font-size:13px;font-weight:600;border-radius:99px;padding:8px 14px}
+.phone-cta{margin-top:12px;background:var(--renee-encre);color:var(--renee-lait);border-radius:99px;text-align:center;font-size:15px;font-weight:600;padding:12px}
+@media(max-width:680px){.module-phone{width:min(100%,310px)}}
