@@ -204,12 +204,19 @@
     : '';
   const endpoint = hubspotEndpoint || contact.CONTACT_ENDPOINT || '';
   const email = contact.CONTACT_EMAIL || '';
-  // Correspondance entre les champs du formulaire et les propriétés de contact HubSpot.
-  const hubspotFields = { firstname: 'firstname', lastname: 'lastname', organization: 'company', email: 'email', context: 'message' };
+  // Correspondance entre les champs du formulaire et les propriétés HubSpot
+  // (0-1 = objet Contact, 0-2 = objet Entreprise : l'organisme crée une fiche Entreprise reliée au contact).
+  const hubspotFields = [
+    { key: 'firstname', objectTypeId: '0-1', name: 'firstname' },
+    { key: 'lastname', objectTypeId: '0-1', name: 'lastname' },
+    { key: 'organization', objectTypeId: '0-2', name: 'name' },
+    { key: 'email', objectTypeId: '0-1', name: 'email' },
+    { key: 'context', objectTypeId: '0-1', name: 'message' }
+  ];
   function hubspotPayload(data) {
     const hutk = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/)?.[1];
-    const fields = Object.entries(hubspotFields)
-      .map(([key, name]) => ({ objectTypeId: '0-1', name, value: String(data[key] || '').trim() }))
+    const fields = hubspotFields
+      .map(({ key, objectTypeId, name }) => ({ objectTypeId, name, value: String(data[key] || '').trim() }))
       .filter(field => field.value);
     return { fields, context: { ...(hutk && { hutk }), pageUri: location.href, pageName: document.title } };
   }
