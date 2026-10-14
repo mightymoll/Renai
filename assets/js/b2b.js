@@ -237,6 +237,14 @@
     formStarted = true;
     track('formulaire_commence', { form_id: 'pilot-form', premier_champ: event.target.name });
   });
+  // Un événement par champ rempli (au moment où le visiteur quitte le champ), une seule fois par champ.
+  const filledFields = new Set();
+  form.addEventListener('change', event => {
+    const name = event.target.name;
+    if (!name || name === 'website' || filledFields.has(name) || !String(event.target.value || '').trim()) return;
+    filledFields.add(name);
+    track('formulaire_champ_rempli', { form_id: 'pilot-form', champ: name, nombre_champs_remplis: filledFields.size });
+  });
   document.querySelectorAll('.faq-list details').forEach(item => {
     item.addEventListener('toggle', () => {
       if (!item.open) return;
